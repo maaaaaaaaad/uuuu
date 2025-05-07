@@ -8,5 +8,12 @@ int main(void) {
 
     printf("%d\n", diff);
 
+    const long *p3 = (long *) 0x1000;
+    const long *p4 = (long *) 0x1008;
+
+    const long diff2 = p4 - p3;
+
+    printf("%ld\n", diff2);
+
     return 0;
 }
