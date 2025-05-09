@@ -10,5 +10,9 @@ int main(void) {
     printf("p1: %p\n", p1);
     printf("p2: %p\n", p2);
 
+    p1++;
+
+    printf("p1++: %p\n", p1);
+
     return 0;
 }
