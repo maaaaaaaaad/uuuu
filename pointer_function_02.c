@@ -5,9 +5,13 @@ void change_string(char *str) {
 }
 
 int main(void) {
-    char *str = "Hello, World!";
+    char str[] = "Hello, World!";
 
     printf("origin str: %s\n", str);
+
+    change_string(str);
+
+    printf("changed str: %s\n", str);
 
     return 0;
 }
