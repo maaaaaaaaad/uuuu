@@ -2,8 +2,14 @@
 #include <stdlib.h>
 
 int main(void) {
-    const int *pi = malloc(10);
-    printf("%p\n", pi);
+    int *pi = malloc(3 * sizeof(int));
+
+    for (int i = 0; i < 3; i++) {
+        pi[i] = i + 1;
+    }
+
+    free(pi);
+
 
     return 0;
 }
