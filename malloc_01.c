@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(void) {
-    int *pi = malloc(3 * sizeof(int));
+    const int size = 3 * sizeof(int);
+    int *pi = malloc(size);
 
-    for (int i = 0; i < 3; i++) {
-        pi[i] = i + 1;
-    }
+    memset(pi, 0, size);
 
     free(pi);
 
