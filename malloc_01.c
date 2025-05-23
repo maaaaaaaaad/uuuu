@@ -5,8 +5,8 @@
 int main(void) {
     const char memSize = sizeof(char);
     char *p = malloc(memSize);
-    printf("%p\n", p);
     free(p);
+    p = NULL;
 
 
     return 0;
