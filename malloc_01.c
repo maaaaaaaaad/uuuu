@@ -1,13 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define safeFree(p) if(p) {free(p); p = NULL;}
 
 int main(void) {
     const char memSize = sizeof(char);
     char *p = malloc(memSize);
-    free(p);
-    p = NULL;
-
-
+    safeFree(p);
     return 0;
 }
