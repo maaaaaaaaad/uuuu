@@ -10,6 +10,6 @@ int main(void) {
     return 0;
 }
 
-int add(const int x, const int y) {
-    return x + y;
+int add(const int a, const int b) {
+    return a + b;
 }
