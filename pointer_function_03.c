@@ -1,6 +1,5 @@
 #include <stdio.h>
-
-int add(int x, int y);
+#include "modules/add.h"
 
 int main(void) {
     int (*pAdd)(int, int) = add;
