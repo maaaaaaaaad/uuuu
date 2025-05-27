@@ -1,12 +1,13 @@
 #include <stdio.h>
 
 struct member {
-    char id[];
+    char id[10];
+    char name[5];
 };
 
 int main(void) {
     struct member member;
 
-    printf("%s\n", member.id);
+    printf("&member: %p\n", &member);
     return 0;
 }
