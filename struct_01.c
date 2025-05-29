@@ -6,10 +6,14 @@ typedef struct {
 
 typedef struct {
     int age;
-    char name[10];
     Abstract abstract;
+    char name[10];
 } Member;
 
 int main(void) {
+    const Member member = {0};
+
+    printf("&member %p\n", &member);
+    printf("sizeof(member) %lu\n", sizeof(member));
     return 0;
 }
