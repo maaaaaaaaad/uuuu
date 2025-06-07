@@ -1,7 +1,9 @@
 #include <stdio.h>
 
-void printValue(void *data, const char type) {
-    switch (type) {
+void printValue(void *data, const char type)
+{
+    switch (type)
+    {
         case 'i':
             printf("Integer: %d\n", *(int *) data);
             break;
@@ -17,7 +19,8 @@ void printValue(void *data, const char type) {
     }
 }
 
-int main() {
+int main()
+{
     int intValue = 10;
     float floatValue = 3.14f;
     char charValue = 'X';

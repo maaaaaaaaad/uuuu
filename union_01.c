@@ -1,16 +1,19 @@
 #include <stdio.h>
 
-struct su_t {
+struct su_t
+{
     unsigned char age;
     unsigned long long id;
 };
 
-union un_t {
+union un_t
+{
     unsigned char age;
     unsigned long long id;
 };
 
-int main(void) {
+int main(void)
+{
     struct su_t su = {0};
     union un_t un = {0};
 

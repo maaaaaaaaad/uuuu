@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-int main(void) {
+int main(void)
+{
     const char *p1 = "abc";
     const char *p2 = "abc";
 

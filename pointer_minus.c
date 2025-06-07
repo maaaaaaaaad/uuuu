@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-int main(void) {
+int main(void)
+{
     const int *p1 = (int *) 0x100;
     const int *p2 = (int *) 0x104;
 

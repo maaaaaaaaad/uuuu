@@ -1,16 +1,19 @@
 #include <stdio.h>
 
-typedef struct {
+typedef struct
+{
     int date;
 } Abstract;
 
-typedef struct {
+typedef struct
+{
     int age;
     Abstract abstract;
     char name[10];
 } Member;
 
-int main(void) {
+int main(void)
+{
     const Member member = {0};
 
     printf("&member %p\n", &member);

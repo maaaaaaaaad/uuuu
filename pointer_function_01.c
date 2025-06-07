@@ -1,18 +1,21 @@
 #include <stdio.h>
 
-void copyValues(char x, char y) {
+void copyValues(char x, char y)
+{
     const char tmp = x;
     x = y;
     y = tmp;
 }
 
-void ptrValues(char *x, char *y) {
+void ptrValues(char *x, char *y)
+{
     const char tmp = *x;
     *x = *y;
     *y = tmp;
 }
 
-int main() {
+int main()
+{
     char x = 5;
     char y = 10;
     copyValues(x, y);

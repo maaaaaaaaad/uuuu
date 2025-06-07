@@ -10,7 +10,8 @@ char **strArr;
 int len = 2;
 int pos = 0;
 
-int main(void) {
+int main(void)
+{
     char input[50];
     const char intputLength = sizeof(input);
 
@@ -19,12 +20,14 @@ int main(void) {
     printf("Enter strings: ");
     printf(">");
 
-    while (strlen(fgets(input, intputLength, stdin))) {
+    while (strlen(fgets(input, intputLength, stdin)))
+    {
         add(input);
         printf(">");
     }
 
-    for (int i = 0; i < pos; i++) {
+    for (int i = 0; i < pos; i++)
+    {
         free(strArr[i]);
     }
 
@@ -33,11 +36,13 @@ int main(void) {
     return 0;
 }
 
-void add(char *str) {
+void add(char *str)
+{
     char *tmp = malloc(sizeof(char) * strlen(str) + 1);
     char **newStarArr;
 
-    if (pos >= len) {
+    if (pos >= len)
+    {
         newStarArr = malloc(sizeof(char *) * len * 2);
         memcpy(newStarArr, strArr, len * sizeof(char *));
         free(strArr);
@@ -51,11 +56,13 @@ void add(char *str) {
     printArr();
 }
 
-void printArr(void) {
+void printArr(void)
+{
     int i;
     printf("strArr=%p: [", strArr);
 
-    for (int j = 0; j < pos; j++) {
+    for (int j = 0; j < pos; j++)
+    {
         printf("%s", strArr[j]);
     }
 

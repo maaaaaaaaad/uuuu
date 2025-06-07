@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-int main(void) {
+int main(void)
+{
     const int arr[3] = {0};
     const float f = 0.0f;
 

@@ -1,10 +1,12 @@
 #include <stdio.h>
 
-int main(void) {
+int main(void)
+{
     const char str[] = "Hello, World!";
     const char *p = str;
 
-    while (*p != '\0') {
+    while (*p != '\0')
+    {
         printf("%c", *p);
         p++;
     }
