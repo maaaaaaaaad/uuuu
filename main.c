@@ -1,18 +1,55 @@
 #include <stdio.h>
-#define MAX_ARRAY_LENGTH 100
+#include <stdlib.h>
+#include <string.h>
 
-void sum(const char *arrLength, int *sumNumber)
+int get_array_size()
 {
-    *sumNumber = (*arrLength) * (*arrLength + 1) / 2;
+    char buffer[32];
+    int size;
+
+    while (1)
+    {
+        printf("(1-1000000): ");
+
+        if (fgets(buffer, sizeof(buffer), stdin) == NULL)
+        {
+            continue;
+        }
+
+        size_t len = strlen(buffer);
+        if (len > 0 && buffer[len - 1] == '\n')
+        {
+            buffer[len - 1] = '\0';
+        }
+
+        if (sscanf(buffer, "%d", &size) == 1 && size > 0 && size <= 1000000)
+        {
+            return size;
+        }
+    }
 }
 
 int main(void)
 {
-    int sumArr = 0;
-    const char arrLength = MAX_ARRAY_LENGTH;
+    const int n = get_array_size();
 
-    sum(&arrLength, &sumArr);
+    int *array = (int *) malloc(n * sizeof(int));
+    if (array == NULL)
+    {
+        return 1;
+    }
 
-    printf("sumArr: %d\n", sumArr);
+    for (int i = 0; i < n; i++)
+    {
+        array[i] = i;
+    }
+    for (int i = 0; i < n; i++)
+    {
+        printf("%d", array[i]);
+        if (i < n - 1) printf(", ");
+    }
+
+    free(array);
+
     return 0;
 }
