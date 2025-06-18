@@ -8,7 +8,14 @@ int main(void)
     printf("students: ");
     scanf("%d", &students);
 
-    int *arr = (int *) malloc(students * sizeof(int));
-    free(arr);
+    int *studentsScores = (int *) malloc(students * sizeof(int));
+
+    if (studentsScores == NULL)
+    {
+        printf("Error: malloc failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    free(studentsScores);
     return 0;
 }
