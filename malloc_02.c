@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void add(char *str);
+void add(const char *str);
 
 void printArr(void);
 
@@ -36,14 +36,13 @@ int main(void)
     return 0;
 }
 
-void add(char *str)
+void add(const char *str)
 {
     char *tmp = malloc(sizeof(char) * strlen(str) + 1);
-    char **newStarArr;
 
     if (pos >= len)
     {
-        newStarArr = malloc(sizeof(char *) * len * 2);
+        char **newStarArr = malloc(sizeof(char *) * len * 2);
         memcpy(newStarArr, strArr, len * sizeof(char *));
         free(strArr);
         strArr = newStarArr;
