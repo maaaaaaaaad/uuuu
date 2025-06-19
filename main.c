@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#define safeFree(p) if(p) {free(p); p = NULL;}
 
 void studentAverageScore(const int *students, const int *studentsScore, int *averageScore)
 {
@@ -42,6 +42,6 @@ int main(void)
 
     printf("\nAverage Score: %d\n", averageScore);
 
-    free(studentsScores);
+    safeFree(studentsScores);
     return 0;
 }
