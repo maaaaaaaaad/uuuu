@@ -60,8 +60,18 @@ int main(void)
 
     for (int i = 0; i < fieldsSize; i++)
     {
-        printf("Input field %d: ", i + 1);
-        scanf("%d", &scores[i]);
+        char prompt[50];
+        snprintf(prompt, sizeof(prompt), "Input field %d: ", i + 1);
+
+        while (!safeReadInt(prompt, &scores[i]))
+        {
+            printf("Invalid input\n");
+        }
+    }
+    printf("\n scores:\n");
+    for (int i = 0; i < fieldsSize; i++)
+    {
+        printf("Field %d: %d\n", i + 1, scores[i]);
     }
 
     safeFree(scores);
