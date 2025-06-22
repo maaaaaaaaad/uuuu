@@ -7,6 +7,12 @@ int main(void)
 {
     int *scores = (int *) malloc(fieldsSize * sizeof(int));
 
+    if (scores == NULL)
+    {
+        printf("Error: malloc failed\n");
+        exit(EXIT_FAILURE);
+    }
+
     for (int i = 0; i < fieldsSize; i++)
     {
         printf("Input field %d: ", i + 1);
