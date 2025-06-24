@@ -15,21 +15,42 @@ int main(void)
 {
     int students = 0;
     int averageScore = 0;
+    char buffer[32];
     printf("students: ");
-    scanf("%d", &students);
+    if (fgets(buffer, sizeof(buffer), stdin) == NULL)
+    {
+        printf("Error: input failed\n");
+        return EXIT_FAILURE;
+    }
+    if (sscanf(buffer, "%d", &students) != 1 || students <= 0)
+    {
+        printf("Error: invalid input\n");
+        return EXIT_FAILURE;
+    }
 
     int *studentsScores = (int *) malloc(students * sizeof(int));
 
     if (studentsScores == NULL)
     {
         printf("Error: malloc failed\n");
-        exit(EXIT_FAILURE);
+        return EXIT_FAILURE;
     }
 
     for (int i = 0; i < students; i++)
     {
         printf("studentsScores[%d]: ", i);
-        scanf("%d", &studentsScores[i]);
+        if (fgets(buffer, sizeof(buffer), stdin) == NULL)
+        {
+            printf("Error: input failed\n");
+            safeFree(studentsScores);
+            return EXIT_FAILURE;
+        }
+        if (sscanf(buffer, "%d", &studentsScores[i]) != 1)
+        {
+            printf("Error: invalid input\n");
+            safeFree(studentsScores);
+            return EXIT_FAILURE;
+        }
     }
 
     printf("\nStudents Scores:\n");
