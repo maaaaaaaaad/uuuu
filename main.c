@@ -5,19 +5,54 @@ int main()
     int arr[] = {64, 34, 25, 12, 22, 11, 90};
     const int n = sizeof(arr) / sizeof(arr[0]);
 
-    for (int i = 0; i < n - 1; i++)
+    for (int i = n / 2 - 1; i >= 0; i--)
     {
-        int min_idx = i;
-        for (int j = i + 1; j < n; j++)
+        int k = i;
+        const int v = arr[k];
+        bool heap = false;
+
+        while (!heap && 2 * k + 1 < n)
         {
-            if (arr[j] < arr[min_idx])
+            int j = 2 * k + 1;
+            if (j + 1 < n && arr[j] < arr[j + 1])
+                j++;
+
+            if (v >= arr[j])
+                heap = true;
+            else
             {
-                min_idx = j;
+                arr[k] = arr[j];
+                k = j;
             }
         }
-        const int temp = arr[min_idx];
-        arr[min_idx] = arr[i];
+        arr[k] = v;
+    }
+
+    for (int i = n - 1; i > 0; i--)
+    {
+        const int temp = arr[0];
+        arr[0] = arr[i];
         arr[i] = temp;
+
+        int k = 0;
+        const int v = arr[k];
+        bool heap = false;
+
+        while (!heap && 2 * k + 1 < i)
+        {
+            int j = 2 * k + 1;
+            if (j + 1 < i && arr[j] < arr[j + 1])
+                j++;
+
+            if (v >= arr[j])
+                heap = true;
+            else
+            {
+                arr[k] = arr[j];
+                k = j;
+            }
+        }
+        arr[k] = v;
     }
 
     return 0;
