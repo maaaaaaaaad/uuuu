@@ -1,37 +1,30 @@
 #include <stdio.h>
-#include <limits.h>
-#include <secure/_string.h>
+#include <stdlib.h>
+#include <time.h>
 
 int main()
 {
-    const int size = 7;
-    const int arr[] = {64, 34, 25, 12, 22, 11, 90};
-    int max_element = INT_MIN;
-    int min_element = INT_MAX;
+    const int size = 10;
+    int arr[size];
+
+    srand(time(NULL));
 
     for (int i = 0; i < size; i++)
     {
-        if (arr[i] > max_element) max_element = arr[i];
-        if (arr[i] < min_element) min_element = arr[i];
+        arr[i] = rand() % 31 + 10;
+        printf("%d ", arr[i]);
     }
 
-    const int hash_size = max_element - min_element + 1;
-    int hash[hash_size];
-
-    memset(hash, 0, sizeof(hash));
-
-    for (int i = 0; i < size; i++)
+    int max = arr[0];
+    for (int i = 1; i < size; i++)
     {
-        hash[arr[i] - min_element]++;
-    }
-
-    for (int i = 0; i < hash_size; i++)
-    {
-        while (hash[i]--)
+        if (arr[i] > max)
         {
-            printf("%d ", i + min_element);
+            max = arr[i];
         }
     }
+
+    printf("\nMAX: %d", max);
 
     return 0;
 }
