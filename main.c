@@ -15,16 +15,24 @@ int main()
         printf("%d ", arr[i]);
     }
 
-    int max = arr[0];
-    for (int i = 1; i < size; i++)
+    for (int i = 0; i < size - 1; i++)
     {
-        if (arr[i] > max)
+        for (int j = 0; j < size - 1 - i; j++)
         {
-            max = arr[i];
+            if (arr[j] > arr[j + 1])
+            {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
         }
     }
 
-    printf("\nMAX: %d", max);
+    printf("\nSorted: ");
+    for (int i = 0; i < size; i++)
+    {
+        printf("%d ", arr[i]);
+    }
 
     return 0;
 }
