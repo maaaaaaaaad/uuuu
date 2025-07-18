@@ -7,22 +7,23 @@ int main()
     const int size = 10;
     int arr[size];
 
-    srand(time(NULL));
+    srand((unsigned int) time(NULL));
 
+    printf("Original: ");
     for (int i = 0; i < size; i++)
     {
-        arr[i] = rand() % 31 + 10;
+        arr[i] = (rand() % 31) + 10;
         printf("%d ", arr[i]);
     }
 
-    for (int i = 1; i < size; i++)
+    for (int i = 1, j, key; i < size; i++)
     {
-        int key = arr[i];
-        int j = i - 1;
-        while (j >= 0 && arr[j] > key)
+        key = arr[i];
+        j = i - 1;
+
+        for (; j >= 0 && arr[j] > key; j--)
         {
             arr[j + 1] = arr[j];
-            j--;
         }
         arr[j + 1] = key;
     }
