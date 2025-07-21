@@ -6,30 +6,35 @@ int main()
 {
     const int size = 10;
     int arr[size];
+    int i;
 
     srand((unsigned int) time(NULL));
 
     printf("Original: ");
-    for (int i = 0; i < size; i++)
+    for (i = 0; i < size; i++)
     {
         arr[i] = (rand() % 31) + 10;
         printf("%d ", arr[i]);
     }
 
-    for (int i = 1, j, key; i < size; i++)
+    for (i = 0; i < size - 1; i++)
     {
-        key = arr[i];
-        j = i - 1;
-
-        for (; j >= 0 && arr[j] > key; j--)
+        int min_idx = i;
+        for (int j = i + 1; j < size; j++)
         {
-            arr[j + 1] = arr[j];
+            if (arr[j] < arr[min_idx])
+                min_idx = j;
         }
-        arr[j + 1] = key;
+        if (min_idx != i)
+        {
+            const int temp = arr[i];
+            arr[i] = arr[min_idx];
+            arr[min_idx] = temp;
+        }
     }
 
     printf("\nSorted: ");
-    for (int i = 0; i < size; i++)
+    for (i = 0; i < size; i++)
     {
         printf("%d ", arr[i]);
     }
