@@ -2,6 +2,63 @@
 #include <stdlib.h>
 #include <time.h>
 
+void merge(int arr[], int left, int mid, int right)
+{
+    int i, j, k;
+    const int n1 = mid - left + 1;
+    const int n2 = right - mid;
+
+    int L[n1], R[n2];
+
+    for (i = 0; i < n1; i++)
+        L[i] = arr[left + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[mid + 1 + j];
+
+    i = 0;
+    j = 0;
+    k = left;
+
+    while (i < n1 && j < n2)
+    {
+        if (L[i] <= R[j])
+        {
+            arr[k] = L[i];
+            i++;
+        } else
+        {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1)
+    {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2)
+    {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+void mergeSort(int arr[], int left, int right)
+{
+    if (left < right)
+    {
+        const int mid = left + (right - left) / 2;
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+        merge(arr, left, mid, right);
+    }
+}
+
 int main()
 {
     const int size = 10;
@@ -17,21 +74,7 @@ int main()
         printf("%d ", arr[i]);
     }
 
-    for (i = 0; i < size - 1; i++)
-    {
-        int min_idx = i;
-        for (int j = i + 1; j < size; j++)
-        {
-            if (arr[j] < arr[min_idx])
-                min_idx = j;
-        }
-        if (min_idx != i)
-        {
-            const int temp = arr[i];
-            arr[i] = arr[min_idx];
-            arr[min_idx] = temp;
-        }
-    }
+    mergeSort(arr, 0, size - 1);
 
     printf("\nSorted: ");
     for (i = 0; i < size; i++)
