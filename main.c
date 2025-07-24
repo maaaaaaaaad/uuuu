@@ -2,60 +2,47 @@
 #include <stdlib.h>
 #include <time.h>
 
-void merge(int arr[], int left, int mid, int right)
+void merge(const int arr[], const int left, const int mid, const int right, int temp[])
 {
-    int i, j, k;
-    const int n1 = mid - left + 1;
-    const int n2 = right - mid;
+    int i = left;
+    int j = mid + 1;
+    int k = left;
 
-    int L[n1], R[n2];
-
-    for (i = 0; i < n1; i++)
-        L[i] = arr[left + i];
-    for (j = 0; j < n2; j++)
-        R[j] = arr[mid + 1 + j];
-
-    i = 0;
-    j = 0;
-    k = left;
-
-    while (i < n1 && j < n2)
+    while (i <= mid && j <= right)
     {
-        if (L[i] <= R[j])
+        if (arr[i] <= arr[j])
         {
-            arr[k] = L[i];
-            i++;
+            temp[k++] = arr[i++];
         } else
         {
-            arr[k] = R[j];
-            j++;
+            temp[k++] = arr[j++];
         }
-        k++;
     }
 
-    while (i < n1)
+    while (i <= mid)
     {
-        arr[k] = L[i];
-        i++;
-        k++;
+        temp[k++] = arr[i++];
     }
 
-    while (j < n2)
+    while (j <= right)
     {
-        arr[k] = R[j];
-        j++;
-        k++;
+        temp[k++] = arr[j++];
+    }
+
+    for (i = left; i <= right; i++)
+    {
+        ((int *) arr)[i] = temp[i];
     }
 }
 
-void mergeSort(int arr[], int left, int right)
+void mergeSort(int arr[], const int left, const int right, int temp[])
 {
     if (left < right)
     {
         const int mid = left + (right - left) / 2;
-        mergeSort(arr, left, mid);
-        mergeSort(arr, mid + 1, right);
-        merge(arr, left, mid, right);
+        mergeSort(arr, left, mid, temp);
+        mergeSort(arr, mid + 1, right, temp);
+        merge(arr, left, mid, right, temp);
     }
 }
 
@@ -63,6 +50,7 @@ int main()
 {
     const int size = 10;
     int arr[size];
+    int temp[size];
     int i;
 
     srand((unsigned int) time(NULL));
@@ -74,7 +62,7 @@ int main()
         printf("%d ", arr[i]);
     }
 
-    mergeSort(arr, 0, size - 1);
+    mergeSort(arr, 0, size - 1, temp);
 
     printf("\nSorted: ");
     for (i = 0; i < size; i++)
