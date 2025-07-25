@@ -50,13 +50,31 @@ void mergeSort(int arr[], const int left, const int right, int temp[])
     merge(arr, left, mid, right, temp);
 }
 
+void sortArray(int arr[], const int size)
+{
+    if (arr == NULL || size <= 1)
+    {
+        return;
+    }
+
+    int *temp = malloc(size * sizeof(int));
+    if (!temp)
+    {
+        fprintf(stderr, "Error: Memory allocation failed in sortArray.\n");
+        return;
+    }
+
+    mergeSort(arr, 0, size - 1, temp);
+
+    free(temp);
+}
+
 int main()
 {
     const int size = 10;
     int *arr = malloc(size * sizeof(int));
-    int *temp = malloc(size * sizeof(int));
 
-    if (!arr || !temp)
+    if (!arr)
     {
         printf("Memory allocation failed\n");
         return -1;
@@ -71,7 +89,7 @@ int main()
         printf("%d ", arr[i]);
     }
 
-    mergeSort(arr, 0, size - 1, temp);
+    sortArray(arr, size);
 
     printf("\nSorted: ");
     for (int i = 0; i < size; i++)
@@ -81,6 +99,5 @@ int main()
     printf("\n");
 
     free(arr);
-    free(temp);
     return 0;
 }
