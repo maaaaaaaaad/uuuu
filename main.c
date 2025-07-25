@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-void merge(const int arr[], const int left, const int mid, const int right, int temp[])
+void merge(int arr[], const int left, const int mid, const int right, int temp[])
 {
     int i = left;
     int j = mid + 1;
@@ -31,32 +31,41 @@ void merge(const int arr[], const int left, const int mid, const int right, int 
 
     for (i = left; i <= right; i++)
     {
-        ((int *) arr)[i] = temp[i];
+        arr[i] = temp[i];
     }
 }
 
 void mergeSort(int arr[], const int left, const int right, int temp[])
 {
-    if (left < right)
+    if (left >= right)
     {
-        const int mid = left + (right - left) / 2;
-        mergeSort(arr, left, mid, temp);
-        mergeSort(arr, mid + 1, right, temp);
-        merge(arr, left, mid, right, temp);
+        return;
     }
+
+    const int mid = left + (right - left) / 2;
+
+    mergeSort(arr, left, mid, temp);
+    mergeSort(arr, mid + 1, right, temp);
+
+    merge(arr, left, mid, right, temp);
 }
 
 int main()
 {
     const int size = 10;
-    int arr[size];
-    int temp[size];
-    int i;
+    int *arr = malloc(size * sizeof(int));
+    int *temp = malloc(size * sizeof(int));
+
+    if (!arr || !temp)
+    {
+        printf("Memory allocation failed\n");
+        return -1;
+    }
 
     srand((unsigned int) time(NULL));
 
     printf("Original: ");
-    for (i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
         arr[i] = (rand() % 31) + 10;
         printf("%d ", arr[i]);
@@ -65,10 +74,13 @@ int main()
     mergeSort(arr, 0, size - 1, temp);
 
     printf("\nSorted: ");
-    for (i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
         printf("%d ", arr[i]);
     }
+    printf("\n");
 
+    free(arr);
+    free(temp);
     return 0;
 }
