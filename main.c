@@ -2,6 +2,21 @@
 #include <stdlib.h>
 #include <time.h>
 
+void insertionSort(int arr[], const int left, const int right)
+{
+    for (int i = left + 1; i <= right; i++)
+    {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= left && arr[j] > key)
+        {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}
+
 void merge(int arr[], const int left, const int mid, const int right, int temp[])
 {
     int i = left;
@@ -37,8 +52,10 @@ void merge(int arr[], const int left, const int mid, const int right, int temp[]
 
 void mergeSort(int arr[], const int left, const int right, int temp[])
 {
-    if (left >= right)
+    const int CUTOFF = 16;
+    if (right - left <= CUTOFF)
     {
+        insertionSort(arr, left, right);
         return;
     }
 
