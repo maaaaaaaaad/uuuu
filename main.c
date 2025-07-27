@@ -6,7 +6,7 @@ void insertionSort(int arr[], const int left, const int right)
 {
     for (int i = left + 1; i <= right; i++)
     {
-        int key = arr[i];
+        const int key = arr[i];
         int j = i - 1;
         while (j >= left && arr[j] > key)
         {
@@ -64,7 +64,10 @@ void mergeSort(int arr[], const int left, const int right, int temp[])
     mergeSort(arr, left, mid, temp);
     mergeSort(arr, mid + 1, right, temp);
 
-    merge(arr, left, mid, right, temp);
+    if (arr[mid] > arr[mid + 1])
+    {
+        merge(arr, left, mid, right, temp);
+    }
 }
 
 void sortArray(int arr[], const int size)
