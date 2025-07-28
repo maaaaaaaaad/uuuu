@@ -2,71 +2,37 @@
 #include <stdlib.h>
 #include <time.h>
 
-void insertionSort(int arr[], const int left, const int right)
+void swap(int *a, int *b)
 {
-    for (int i = left + 1; i <= right; i++)
-    {
-        const int key = arr[i];
-        int j = i - 1;
-        while (j >= left && arr[j] > key)
-        {
-            arr[j + 1] = arr[j];
-            j--;
-        }
-        arr[j + 1] = key;
-    }
+    int temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
-void merge(int arr[], const int left, const int mid, const int right, int temp[])
+int partition(int arr[], int low, int high)
 {
-    int i = left;
-    int j = mid + 1;
-    int k = left;
+    int pivot = arr[high];
+    int i = (low - 1);
 
-    while (i <= mid && j <= right)
+    for (int j = low; j <= high - 1; j++)
     {
-        if (arr[i] <= arr[j])
+        if (arr[j] < pivot)
         {
-            temp[k++] = arr[i++];
-        } else
-        {
-            temp[k++] = arr[j++];
+            i++;
+            swap(&arr[i], &arr[j]);
         }
     }
-
-    while (i <= mid)
-    {
-        temp[k++] = arr[i++];
-    }
-
-    while (j <= right)
-    {
-        temp[k++] = arr[j++];
-    }
-
-    for (i = left; i <= right; i++)
-    {
-        arr[i] = temp[i];
-    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
 }
 
-void mergeSort(int arr[], const int left, const int right, int temp[])
+void quickSort(int arr[], int low, int high)
 {
-    const int CUTOFF = 16;
-    if (right - left <= CUTOFF)
+    if (low < high)
     {
-        insertionSort(arr, left, right);
-        return;
-    }
-
-    const int mid = left + (right - left) / 2;
-
-    mergeSort(arr, left, mid, temp);
-    mergeSort(arr, mid + 1, right, temp);
-
-    if (arr[mid] > arr[mid + 1])
-    {
-        merge(arr, left, mid, right, temp);
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
     }
 }
 
@@ -76,17 +42,7 @@ void sortArray(int arr[], const int size)
     {
         return;
     }
-
-    int *temp = malloc(size * sizeof(int));
-    if (!temp)
-    {
-        fprintf(stderr, "Error: Memory allocation failed in sortArray.\n");
-        return;
-    }
-
-    mergeSort(arr, 0, size - 1, temp);
-
-    free(temp);
+    quickSort(arr, 0, size - 1);
 }
 
 int main()
