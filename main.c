@@ -2,41 +2,56 @@
 #include <stdlib.h>
 #include <time.h>
 
-void swap(int *a, int *b)
+static inline void swap(int *const a, int *const b)
 {
-    int temp = *a;
+    const int temp = *a;
     *a = *b;
     *b = temp;
 }
 
-int partition(int arr[], int low, int high)
+static int partition(int *const arr, const int low, const int high)
 {
-    int pivot = arr[high];
-    int i = (low - 1);
+    const int pivot = arr[low + (high - low) / 2];
+    int i = low - 1;
+    int j = high + 1;
 
-    for (int j = low; j <= high - 1; j++)
+    while (1)
     {
-        if (arr[j] < pivot)
+        do
         {
             i++;
-            swap(&arr[i], &arr[j]);
+        } while (arr[i] < pivot);
+
+        do
+        {
+            j--;
+        } while (arr[j] > pivot);
+
+        if (i >= j) return j;
+
+        swap(&arr[i], &arr[j]);
+    }
+}
+
+static void quickSort(int *const arr, const int low, const int high)
+{
+    while (low < high)
+    {
+        const int pi = partition(arr, low, high);
+
+        if (pi - low < high - pi)
+        {
+            quickSort(arr, low, pi);
+            quickSort(arr, pi + 1, high);
+        } else
+        {
+            quickSort(arr, pi + 1, high);
+            quickSort(arr, low, pi);
         }
     }
-    swap(&arr[i + 1], &arr[high]);
-    return (i + 1);
 }
 
-void quickSort(int arr[], int low, int high)
-{
-    if (low < high)
-    {
-        int pi = partition(arr, low, high);
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
-    }
-}
-
-void sortArray(int arr[], const int size)
+static void sortArray(int *const arr, const int size)
 {
     if (arr == NULL || size <= 1)
     {
@@ -45,10 +60,10 @@ void sortArray(int arr[], const int size)
     quickSort(arr, 0, size - 1);
 }
 
-int main()
+int main(void)
 {
     const int size = 10;
-    int *arr = malloc(size * sizeof(int));
+    int *const arr = malloc(size * sizeof(int));
 
     if (!arr)
     {
