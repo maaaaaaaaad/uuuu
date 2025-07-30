@@ -33,30 +33,27 @@ static int partition(int *const arr, const int low, const int high)
     }
 }
 
-static void quickSort(int *const arr, const int low, const int high)
+static void quickSort(int *const arr, int low, int high)
 {
     while (low < high)
     {
         const int pi = partition(arr, low, high);
 
-        if (pi - low < high - pi)
+        if (pi - low < high - (pi + 1))
         {
             quickSort(arr, low, pi);
-            quickSort(arr, pi + 1, high);
+            low = pi + 1;
         } else
         {
             quickSort(arr, pi + 1, high);
-            quickSort(arr, low, pi);
+            high = pi;
         }
     }
 }
 
+
 static void sortArray(int *const arr, const int size)
 {
-    if (arr == NULL || size <= 1)
-    {
-        return;
-    }
     quickSort(arr, 0, size - 1);
 }
 
