@@ -9,52 +9,25 @@ static inline void swap(int *const a, int *const b)
     *b = temp;
 }
 
-static int partition(int *const arr, const int low, const int high)
+static void selectionSort(int *const arr, const int size)
 {
-    const int pivot = arr[low + (high - low) / 2];
-    int i = low - 1;
-    int j = high + 1;
-
-    while (1)
+    for (int i = 0; i < size - 1; i++)
     {
-        do
+        int min_idx = i;
+        for (int j = i + 1; j < size; j++)
         {
-            i++;
-        } while (arr[i] < pivot);
-
-        do
-        {
-            j--;
-        } while (arr[j] > pivot);
-
-        if (i >= j) return j;
-
-        swap(&arr[i], &arr[j]);
-    }
-}
-
-static void quickSort(int *const arr, int low, int high)
-{
-    while (low < high)
-    {
-        const int pi = partition(arr, low, high);
-
-        if (pi - low < high - (pi + 1))
-        {
-            quickSort(arr, low, pi);
-            low = pi + 1;
-        } else
-        {
-            quickSort(arr, pi + 1, high);
-            high = pi;
+            if (arr[j] < arr[min_idx])
+            {
+                min_idx = j;
+            }
         }
+        swap(&arr[min_idx], &arr[i]);
     }
 }
-
 
 static void sortArray(int *const arr, const int size)
 {
-    quickSort(arr, 0, size - 1);
+    selectionSort(arr, size);
 }
 
 int main(void)
