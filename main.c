@@ -1,64 +1,69 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+#include <limits.h>
 
-static inline void swap(int *const a, int *const b)
+#define V 9
+#define INF INT_MAX
+
+void printSolution(int dist[], int n)
 {
-    const int temp = *a;
-    *a = *b;
-    *b = temp;
+    printf("Vertex   Distance from Source\n");
+    for (int i = 0; i < n; i++)
+        printf("%d \t\t %d\n", i, dist[i]);
 }
 
-static void selectionSort(int *const arr, const int size)
+int minDistance(const int dist[], const int sptSet[], int n)
 {
-    for (int i = 0; i < size - 1; i++)
-    {
-        int min_idx = i;
-        for (int j = i + 1; j < size; j++)
-        {
-            if (arr[j] < arr[min_idx])
-            {
-                min_idx = j;
-            }
-        }
-        swap(&arr[min_idx], &arr[i]);
-    }
+    int min = INF, min_index = 0;
+
+    for (int v = 0; v < n; v++)
+        if (sptSet[v] == 0 && dist[v] <= min)
+            min = dist[v], min_index = v;
+
+    return min_index;
 }
 
-static void sortArray(int *const arr, const int size)
+void dijkstra(int graph[V][V], int src)
 {
-    selectionSort(arr, size);
+    int dist[V];
+    int sptSet[V];
+
+    for (int i = 0; i < V; i++)
+    {
+        dist[i] = INF;
+        sptSet[i] = 0;
+    }
+
+    dist[src] = 0;
+
+    for (int count = 0; count < V - 1; count++)
+    {
+        int u = minDistance(dist, sptSet, V);
+        sptSet[u] = 1;
+
+        for (int v = 0; v < V; v++)
+            if (!sptSet[v] && graph[u][v] && dist[u] != INF
+                && dist[u] + graph[u][v] < dist[v])
+                dist[v] = dist[u] + graph[u][v];
+    }
+
+    printSolution(dist, V);
 }
 
-int main(void)
+int main()
 {
-    const int size = 10;
-    int *const arr = malloc(size * sizeof(int));
+    int graph[V][V] = {
+        {0, 4, 0, 0, 0, 0, 0, 8, 0},
+        {4, 0, 8, 0, 0, 0, 0, 11, 0},
+        {0, 8, 0, 7, 0, 4, 0, 0, 2},
+        {0, 0, 7, 0, 9, 14, 0, 0, 0},
+        {0, 0, 0, 9, 0, 10, 0, 0, 0},
+        {0, 0, 4, 14, 10, 0, 2, 0, 0},
+        {0, 0, 0, 0, 0, 2, 0, 1, 6},
+        {8, 11, 0, 0, 0, 0, 1, 0, 7},
+        {0, 0, 2, 0, 0, 0, 6, 7, 0}
+    };
 
-    if (!arr)
-    {
-        printf("Memory allocation failed\n");
-        return -1;
-    }
+    dijkstra(graph, 0);
 
-    srand((unsigned int) time(NULL));
-
-    printf("Original: ");
-    for (int i = 0; i < size; i++)
-    {
-        arr[i] = (rand() % 31) + 10;
-        printf("%d ", arr[i]);
-    }
-
-    sortArray(arr, size);
-
-    printf("\nSorted: ");
-    for (int i = 0; i < size; i++)
-    {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-
-    free(arr);
     return 0;
 }
