@@ -16,8 +16,11 @@ int minDistance(const int dist[], const int sptSet[], int n)
     int min = INF, min_index = 0;
 
     for (int v = 0; v < n; v++)
-        if (sptSet[v] == 0 && dist[v] <= min)
-            min = dist[v], min_index = v;
+        if (!sptSet[v] && dist[v] < min)
+        {
+            min = dist[v];
+            min_index = v;
+        }
 
     return min_index;
 }
@@ -25,25 +28,28 @@ int minDistance(const int dist[], const int sptSet[], int n)
 void dijkstra(int graph[V][V], int src)
 {
     int dist[V];
-    int sptSet[V];
+    int sptSet[V] = {0};
 
     for (int i = 0; i < V; i++)
     {
         dist[i] = INF;
-        sptSet[i] = 0;
     }
 
     dist[src] = 0;
 
     for (int count = 0; count < V - 1; count++)
     {
-        int u = minDistance(dist, sptSet, V);
+        const int u = minDistance(dist, sptSet, V);
         sptSet[u] = 1;
 
         for (int v = 0; v < V; v++)
-            if (!sptSet[v] && graph[u][v] && dist[u] != INF
-                && dist[u] + graph[u][v] < dist[v])
+        {
+            if (!sptSet[v] && graph[u][v] && dist[u] != INF &&
+                dist[u] + graph[u][v] < dist[v])
+            {
                 dist[v] = dist[u] + graph[u][v];
+            }
+        }
     }
 
     printSolution(dist, V);
