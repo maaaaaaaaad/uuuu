@@ -10,6 +10,24 @@ typedef struct
 
 void findAverageTime(Process *process, const int length)
 {
+    for (int i = 0; i < length - 1; i++)
+    {
+        int min_idx = i;
+        for (int j = i + 1; j < length; j++)
+        {
+            if (process[j].burst_time < process[min_idx].burst_time)
+            {
+                min_idx = j;
+            }
+        }
+        if (min_idx != i)
+        {
+            const Process temp = process[i];
+            process[i] = process[min_idx];
+            process[min_idx] = temp;
+        }
+    }
+
     process[0].waiting_time = 0;
     process[0].turnaround_time = process[0].burst_time;
 
@@ -38,7 +56,7 @@ void findAverageTime(Process *process, const int length)
 int main()
 {
     Process proc[] = {{1, 24}, {2, 3}, {3, 3}};
-    int n = sizeof(proc) / sizeof(proc[0]);
+    const int n = sizeof(proc) / sizeof(proc[0]);
     findAverageTime(proc, n);
     return 0;
 }
