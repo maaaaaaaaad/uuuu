@@ -1,43 +1,25 @@
 #include <stdio.h>
 
-void swap(int *a, int *b)
-{
-    const int temp = *a;
-    *a = *b;
-    *b = temp;
-}
+typedef unsigned long long ull;
 
-void selectionSort(int arr[], int n)
+ull combination(int n, int r)
 {
-    for (int i = 0; i < n - 1; i++)
+    if (r > n) return 0;
+    if (r > n / 2) r = n - r;
+    if (r == 0) return 1;
+
+    ull result = 1;
+    for (int i = 1; i <= r; i++)
     {
-        int min_idx = i;
-        for (int j = i + 1; j < n; j++)
-        {
-            if (arr[j] < arr[min_idx])
-            {
-                min_idx = j;
-            }
-        }
-        if (min_idx != i)
-        {
-            swap(&arr[min_idx], &arr[i]);
-        }
+        result *= (n - i + 1);
+        result /= i;
     }
+    return result;
 }
 
 int main()
 {
-    int arr[] = {64, 25, 12, 22, 11};
-    const int n = sizeof(arr) / sizeof(arr[0]);
-
-    selectionSort(arr, n);
-
-    for (int i = 0; i < n; i++)
-    {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-
+    int n = 5, r = 3;
+    printf("%llu\n", combination(n, r));
     return 0;
 }
